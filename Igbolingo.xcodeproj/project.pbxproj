@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0751B620E4E02B8AB72A6EC1 /* PhraseBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F8E21733FFAFC0ED6A3D16 /* PhraseBuilderView.swift */; };
+		1297180BE131B6BA4B6BA20B /* TitleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329A074B09BE68779F6C2D21 /* TitleCardView.swift */; };
+		193DED85C59022C7180D3E82 /* ProgressionSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372B3758DE04F1B7714E2BB /* ProgressionSystem.swift */; };
 		21F8CEAB3F417E3B1BCD8C8C /* StoryReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBE28FF874F4359CFD9CD5 /* StoryReaderView.swift */; };
 		2BEE9896252B282EC31CEAB0 /* OfflineWordBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980E8D72B540850BE95130F1 /* OfflineWordBank.swift */; };
 		2FEF11F3F4BCAE4ED627D681 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FBFE680E8B1E8529AE548A /* SpeechService.swift */; };
@@ -18,6 +20,7 @@
 		5681A38B420BE2E00CFBB127 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3BC183D97EFEF99AA7A66 /* ReviewView.swift */; };
 		58705BFDB9E0C78E67F2C718 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917B179D47A14D2AA627336C /* QuizView.swift */; };
 		5DCECA57290158FF7BFCA988 /* StoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC0447A14860A1B11DD8CA /* StoriesListView.swift */; };
+		634C7CC84E0BCCCBBD8411DB /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A702A9C65D13033AB5B7FD /* LevelUpView.swift */; };
 		6920618277087C90872E3379 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2192A4092B9C76C536B8C27B /* OnboardingView.swift */; };
 		711FF9E6B0014185F387858C /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE599A8B0DFEA9D91D07495 /* FlashcardView.swift */; };
 		71EFA4B94EB5847D713DEA54 /* MoreStories.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB47354DBECF11DC855E4491 /* MoreStories.swift */; };
@@ -52,6 +55,7 @@
 		0CA5AF53518952C352BC8930 /* CultureContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureContent.swift; sourceTree = "<group>"; };
 		2192A4092B9C76C536B8C27B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		241C074F4E4E5F0805AF65A0 /* Igbolingo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Igbolingo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		329A074B09BE68779F6C2D21 /* TitleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCardView.swift; sourceTree = "<group>"; };
 		34919518429A8A5B964EA61B /* CultureHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureHistoryView.swift; sourceTree = "<group>"; };
 		45AC0447A14860A1B11DD8CA /* StoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesListView.swift; sourceTree = "<group>"; };
 		4A9D431A27D30E565F85CC7F /* ProverbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProverbView.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 		980E8D72B540850BE95130F1 /* OfflineWordBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineWordBank.swift; sourceTree = "<group>"; };
 		9D3353CF508E15AA609353E8 /* SpacedRepetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacedRepetition.swift; sourceTree = "<group>"; };
 		A328B56EB33DF66EDFB30EB9 /* CultureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureView.swift; sourceTree = "<group>"; };
+		A372B3758DE04F1B7714E2BB /* ProgressionSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionSystem.swift; sourceTree = "<group>"; };
 		A6F8E21733FFAFC0ED6A3D16 /* PhraseBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseBuilderView.swift; sourceTree = "<group>"; };
 		A936ABE9E437037167ABCEC0 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
 		AB47354DBECF11DC855E4491 /* MoreStories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStories.swift; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 		D08950C3F7CEFB8E84C55764 /* SavedWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWordsView.swift; sourceTree = "<group>"; };
 		D224B70CB07B3952621C3FF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D2FD29BE9FFFDF30B9F1EE9D /* WordMatchGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMatchGame.swift; sourceTree = "<group>"; };
+		F0A702A9C65D13033AB5B7FD /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
 		F173DF3B9EE9178AED1024E3 /* ListenPickGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenPickGame.swift; sourceTree = "<group>"; };
 		FF688ADD126DB9756F6F6971 /* TextTranslatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTranslatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +121,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		39DFE32C3DFF55D5F0F04F8D /* Progression */ = {
+			isa = PBXGroup;
+			children = (
+				F0A702A9C65D13033AB5B7FD /* LevelUpView.swift */,
+				329A074B09BE68779F6C2D21 /* TitleCardView.swift */,
+			);
+			path = Progression;
+			sourceTree = "<group>";
+		};
 		4171411B6F690B12358C24A5 /* IgboApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +157,7 @@
 				76E191BBEB5E905EF9A9AA05 /* Games */,
 				BA4B58A8AA3C47AACA3F0B8A /* Learn */,
 				73B51147A071C06AED4782CF /* Onboarding */,
+				39DFE32C3DFF55D5F0F04F8D /* Progression */,
 				57643EDBD9CA5F608A8D3F95 /* Settings */,
 				146A7FB5C6FFA7C92FAD2B0B /* Translator */,
 			);
@@ -199,6 +215,7 @@
 			children = (
 				6DA5E5737E13D4A8970A7042 /* AppTheme.swift */,
 				66B769B8E552AE1DA21C547D /* LearnerProfile.swift */,
+				A372B3758DE04F1B7714E2BB /* ProgressionSystem.swift */,
 				BD794B1648192F183B4FC2AB /* QuizQuestion.swift */,
 			);
 			path = Models;
@@ -325,12 +342,14 @@
 				49E28D407AAE2FD32AF1A6A8 /* LearnView.swift in Sources */,
 				7700B81EBB87C9F9F5B9F64D /* LearnerProfile.swift in Sources */,
 				36E0EBE8375E5B76BA0FC482 /* LessonView.swift in Sources */,
+				634C7CC84E0BCCCBBD8411DB /* LevelUpView.swift in Sources */,
 				3E1A1F83A47BFEA64216E4C8 /* ListenPickGame.swift in Sources */,
 				D0D299F67410D86ACF6B71F1 /* MemoryFlipGame.swift in Sources */,
 				71EFA4B94EB5847D713DEA54 /* MoreStories.swift in Sources */,
 				2BEE9896252B282EC31CEAB0 /* OfflineWordBank.swift in Sources */,
 				6920618277087C90872E3379 /* OnboardingView.swift in Sources */,
 				0751B620E4E02B8AB72A6EC1 /* PhraseBuilderView.swift in Sources */,
+				193DED85C59022C7180D3E82 /* ProgressionSystem.swift in Sources */,
 				E17AF614D5812B6926DF939E /* ProverbView.swift in Sources */,
 				F34A33A0F000494E4DD61E0D /* QuizQuestion.swift in Sources */,
 				58705BFDB9E0C78E67F2C718 /* QuizView.swift in Sources */,
@@ -342,6 +361,7 @@
 				5DCECA57290158FF7BFCA988 /* StoriesListView.swift in Sources */,
 				21F8CEAB3F417E3B1BCD8C8C /* StoryReaderView.swift in Sources */,
 				8B59EC336FCD968CD897AC8B /* TextTranslatorView.swift in Sources */,
+				1297180BE131B6BA4B6BA20B /* TitleCardView.swift in Sources */,
 				E86AE12C4B154CB145D25A65 /* TranslatorView.swift in Sources */,
 				B13D5ABB0E0F616F89485E6B /* VoiceTranslatorView.swift in Sources */,
 				C54FB1059A775147749E3697 /* WordMatchGame.swift in Sources */,

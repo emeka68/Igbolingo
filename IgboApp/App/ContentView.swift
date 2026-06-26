@@ -18,6 +18,7 @@ struct MainTabView: View {
 
     var body: some View {
         TabView {
+            // levelUpDetector is attached at root so it watches across all tabs
             TranslatorView()
                 .tabItem { Label("Translate", systemImage: "globe") }
 
@@ -35,6 +36,7 @@ struct MainTabView: View {
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
         }
         .tint(Color.igboGreen)
+        .levelUpDetector()
     }
 }
 

@@ -39,6 +39,30 @@ struct SettingsView: View {
                 }
 
                 // Stats
+                let currentTitle = ProgressionEngine.currentTitle(
+                    words: appState.wordsLearned,
+                    lessons: appState.lessonsCompleted,
+                    streak: appState.streakCount
+                )
+                Section("Your Title") {
+                    HStack(spacing: 14) {
+                        Text(currentTitle.emoji).font(.largeTitle)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(currentTitle.igbo)
+                                .font(.headline.bold())
+                                .foregroundStyle(currentTitle.color)
+                            Text(currentTitle.english)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Text("Level \(currentTitle.id + 1) of \(igboTitles.count)")
+                            .font(.caption.bold())
+                            .foregroundStyle(currentTitle.color)
+                    }
+                    .padding(.vertical, 4)
+                }
+
                 Section("Your Progress") {
                     LabeledContent("Day streak", value: "\(appState.streakCount) 🔥")
                     LabeledContent("Words learned", value: "\(appState.wordsLearned)")
