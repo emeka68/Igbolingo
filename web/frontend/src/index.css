@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-igbo-dark text-white font-sans antialiased; }
+  * { @apply box-border; }
+}
+
+@layer components {
+  .card { @apply bg-igbo-card rounded-2xl p-4 border border-white/5; }
+  .btn-primary { @apply bg-igbo-green text-white font-semibold px-4 py-2 rounded-xl hover:bg-igbo-green/90 transition disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-ghost { @apply text-igbo-green font-semibold px-4 py-2 rounded-xl hover:bg-igbo-green/10 transition; }
+  .chip { @apply px-3 py-1 rounded-full text-sm font-semibold border transition; }
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #219057; border-radius: 4px; }
