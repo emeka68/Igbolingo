@@ -1,4 +1,4 @@
-// Web Speech API TTS — uses en-NG voice if available, falls back to en-GB/en-US
+// TTS service: tries backend espeak-ng first (better Igbo), falls back to Web Speech API
 let selectedVoice = null
 
 function pickVoice() {
@@ -11,16 +11,56 @@ function pickVoice() {
 
 speechSynthesis.onvoiceschanged = () => { selectedVoice = pickVoice() }
 
-export function speak(text, rate = 0.85) {
-  if (!text || !('speechSynthesis' in window)) return
+let currentAudio = null
+
+export async function speak(text, language = 'en') {
+  if (!text) return
+
+  // Stop any currently playing audio
+  stop()
+
+  try {
+    // Try server-side TTS (espeak-ng with Igbo support)
+    const response = await fetch('/api/tts/synthesize', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, language })
+    })
+
+    if (response.ok) {
+      const blob = await response.blob()
+      const audioUrl = URL.createObjectURL(blob)
+      currentAudio = new Audio(audioUrl)
+      currentAudio.play().catch(() => {
+        // If audio play fails, fall back to Web Speech API
+        fallbackToWebSpeech(text)
+      })
+      return
+    }
+  } catch (err) {
+    // Network error or backend unavailable, use fallback
+  }
+
+  // Fallback to Web Speech API if backend fails
+  fallbackToWebSpeech(text)
+}
+
+function fallbackToWebSpeech(text) {
+  if (!('speechSynthesis' in window)) return
+
   speechSynthesis.cancel()
   const utt = new SpeechSynthesisUtterance(text)
   utt.voice = selectedVoice || pickVoice()
-  utt.rate = rate
+  utt.rate = 0.85
   utt.pitch = 1.05
   speechSynthesis.speak(utt)
 }
 
 export function stop() {
+  if (currentAudio) {
+    currentAudio.pause()
+    currentAudio.currentTime = 0
+    currentAudio = null
+  }
   speechSynthesis.cancel()
 }

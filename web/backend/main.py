@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from routes import translate, learn
+from routes import translate, learn, tts
 
 load_dotenv()
 
@@ -16,6 +16,7 @@ app.add_middleware(
 
 app.include_router(translate.router, prefix="/api")
 app.include_router(learn.router, prefix="/api")
+app.include_router(tts.router, prefix="/api")
 
 @app.get("/api/health")
 def health():
