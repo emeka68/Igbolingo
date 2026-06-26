@@ -14,6 +14,7 @@ struct ContentView: View {
 
 struct MainTabView: View {
     @State private var appState = AppState.shared
+    @State private var srStore = SpacedRepetitionStore.shared
 
     var body: some View {
         TabView {
@@ -28,6 +29,7 @@ struct MainTabView: View {
 
             SavedWordsView()
                 .tabItem { Label("Saved", systemImage: "bookmark.fill") }
+                .badge(srStore.dueCount > 0 ? srStore.dueCount : 0)
 
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }

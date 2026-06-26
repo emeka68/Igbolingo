@@ -2,7 +2,9 @@ import SwiftUI
 
 struct SavedWordsView: View {
     @State private var appState = AppState.shared
+    @State private var srStore = SpacedRepetitionStore.shared
     @State private var showFlashcards = false
+    @State private var showReview = false
     @State private var searchText = ""
 
     var allSavedWords: [WordPair] {
@@ -29,12 +31,43 @@ struct SavedWordsView: View {
                     )
                 } else {
                     List {
+                        // Review due banner
+                        if srStore.dueCount > 0 {
+                            Section {
+                                Button {
+                                    showReview = true
+                                } label: {
+                                    HStack(spacing: 14) {
+                                        ZStack {
+                                            Circle().fill(Color.igboGreen).frame(width: 44, height: 44)
+                                            Image(systemName: "brain.head.profile")
+                                                .foregroundStyle(.white)
+                                        }
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("\(srStore.dueCount) word\(srStore.dueCount == 1 ? "" : "s") due for review")
+                                                .font(.headline)
+                                                .foregroundStyle(Color.igboGreen)
+                                            Text("Tap to start your daily review session")
+                                                .font(.caption)
+                                                .foregroundStyle(.secondary)
+                                        }
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(.secondary)
+                                            .font(.caption)
+                                    }
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+
                         ForEach(filtered) { word in
                             SavedWordRow(word: word)
                         }
                         .onDelete { indexSet in
                             indexSet.forEach { i in
                                 appState.toggleSaved(filtered[i])
+                                srStore.unenroll(wordID: filtered[i].english)
                             }
                         }
                     }
@@ -53,6 +86,9 @@ struct SavedWordsView: View {
                         }
                     }
                 }
+            }
+            .fullScreenCover(isPresented: $showReview) {
+                ReviewView()
             }
             .fullScreenCover(isPresented: $showFlashcards) {
                 FlashcardView(words: allSavedWords, isKidMode: appState.isKidMode)

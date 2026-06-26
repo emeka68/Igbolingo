@@ -260,10 +260,19 @@ struct WordCard: View {
 struct SaveWordButton: View {
     let word: WordPair
     @State private var appState = AppState.shared
+    @State private var srStore = SpacedRepetitionStore.shared
 
     var body: some View {
         Button {
-            withAnimation(.spring) { appState.toggleSaved(word) }
+            withAnimation(.spring) {
+                appState.toggleSaved(word)
+                // Enroll in spaced repetition when saving; unenroll when unsaving
+                if appState.isSaved(word) {
+                    srStore.enroll(word)
+                } else {
+                    srStore.unenroll(wordID: word.english)
+                }
+            }
         } label: {
             Image(systemName: appState.isSaved(word) ? "bookmark.fill" : "bookmark")
                 .foregroundStyle(appState.isSaved(word) ? Color.igboGold : .secondary)

@@ -73,17 +73,45 @@ struct LearnView: View {
 
 struct StatsBar: View {
     @State private var appState = AppState.shared
+    @State private var srStore = SpacedRepetitionStore.shared
+    @State private var showReview = false
 
     var body: some View {
-        HStack(spacing: 0) {
-            StatPill(value: "\(appState.streakCount)", label: "day streak", icon: "flame.fill", color: .orange)
-            Spacer()
-            StatPill(value: "\(appState.wordsLearned)", label: "words", icon: "text.book.closed.fill", color: Color.igboGreen)
-            Spacer()
-            StatPill(value: "\(appState.lessonsCompleted)", label: "lessons", icon: "checkmark.seal.fill", color: Color.igboGold)
+        VStack(spacing: 10) {
+            HStack(spacing: 0) {
+                StatPill(value: "\(appState.streakCount)", label: "day streak", icon: "flame.fill", color: .orange)
+                Spacer()
+                StatPill(value: "\(appState.wordsLearned)", label: "words", icon: "text.book.closed.fill", color: Color.igboGreen)
+                Spacer()
+                StatPill(value: "\(appState.lessonsCompleted)", label: "lessons", icon: "checkmark.seal.fill", color: Color.igboGold)
+            }
+
+            if srStore.dueCount > 0 {
+                Button {
+                    showReview = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "brain.head.profile")
+                        Text("\(srStore.dueCount) word\(srStore.dueCount == 1 ? "" : "s") due for review")
+                            .font(.subheadline.bold())
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.caption)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(Color.igboGreen, in: RoundedRectangle(cornerRadius: 10))
+                }
+                .buttonStyle(.plain)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
         }
         .padding()
         .background(Color.igboCard, in: RoundedRectangle(cornerRadius: 16))
+        .fullScreenCover(isPresented: $showReview) {
+            ReviewView()
+        }
+        .animation(.spring, value: srStore.dueCount)
     }
 }
 
