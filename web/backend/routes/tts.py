@@ -14,9 +14,9 @@ router = APIRouter(prefix="/tts", tags=["tts"])
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 ELEVENLABS_API_URL = "https://api.elevenlabs.io/v1/text-to-speech"
 
-# Voice ID - Using ElevenLabs' general-purpose voice
-# User can train custom Igbo voices from native speaker recordings
-IGBO_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"  # Sarah voice (works well for multiple languages)
+# Voice ID - Ugochukwu: Native Igbo speaker voice
+# Authentic pronunciation for Igbo language
+IGBO_VOICE_ID = "nw6EIXCsQ89uJMjytYb8"  # Ugochukwu - Igbo voice
 
 class TextToSpeechRequest(BaseModel):
     text: str
