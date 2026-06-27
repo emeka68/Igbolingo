@@ -1,4 +1,3 @@
-import io
 import subprocess
 import tempfile
 import os
@@ -8,36 +7,62 @@ from fastapi.responses import FileResponse
 
 router = APIRouter(prefix="/tts", tags=["tts"])
 
+# Future: Load custom VITS/Piper models trained on Igbo speaker data
+_custom_model = None
+
+def load_custom_model():
+    """
+    Placeholder for loading custom Igbo TTS model.
+    User can provide trained VITS or Piper model for hybrid approach.
+    """
+    global _custom_model
+    # TODO: Load custom model from /models/igbo-tts.pt if it exists
+    return None
+
 class TextToSpeechRequest(BaseModel):
     text: str
-    language: str = "en"  # "en" for English, "ig" for Igbo (future)
+    language: str = "ig"
 
 @router.post("/synthesize")
 async def synthesize_speech(req: TextToSpeechRequest):
     """
-    Generate speech audio from text using espeak-ng.
-    Currently uses en voice with adjusted pitch/rate for Igbo-like pronunciation.
-    Future: switch to native Igbo voice when available or via ElevenLabs.
+    Generate speech audio from text.
+    Primary: Custom Igbo TTS model (if user provides trained model)
+    Fallback: espeak-ng (Nigerian English approximation)
+
+    Hybrid approach: Uses espeak-ng now, upgrades to custom models
+    when user provides trained VITS/Piper weights.
     """
     if not req.text or not req.text.strip():
         raise HTTPException(400, "Text cannot be empty")
 
-    # Create temporary file for audio output
+    text = req.text.strip()
+
+    # Try custom model if available (user-trained VITS or Piper)
+    custom_model = load_custom_model()
+    if custom_model is not None and req.language == "ig":
+        try:
+            # TODO: Use custom model to generate speech
+            pass
+        except Exception as e:
+            print(f"Custom model error: {e}")
+            # Fall through to espeak-ng
+
+    # Use espeak-ng as current fallback
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
         tmp_path = tmp.name
 
     try:
-        # Use espeak-ng with -w flag to write to file
-        # English voice with adjusted pitch (higher) and rate (slower)
-        # This approximates an Igbo-accented pronunciation
+        # Nigerian English approximation for Igbo
+        # Better than plain English, acceptable until custom model is trained
         subprocess.run(
             [
                 "espeak-ng",
-                "-v", "en",           # English voice
-                "-s", "130",           # Slower speech (130 wpm)
-                "-p", "40",            # Higher pitch (1-99, 40 = higher)
-                "-w", tmp_path,        # Write to temp file
-                req.text.strip()
+                "-v", "en-029",      # Caribbean English (similar tonality to Igbo regions)
+                "-s", "125",          # Moderate speech rate
+                "-p", "45",           # Slightly higher pitch
+                "-w", tmp_path,
+                text
             ],
             capture_output=True,
             timeout=10,
@@ -57,10 +82,10 @@ async def synthesize_speech(req: TextToSpeechRequest):
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)
         raise HTTPException(504, "TTS generation timed out")
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)
-        raise HTTPException(500, f"TTS generation failed")
+        raise HTTPException(500, "TTS generation failed")
     except Exception as e:
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)

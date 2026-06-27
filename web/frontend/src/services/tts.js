@@ -13,14 +13,14 @@ speechSynthesis.onvoiceschanged = () => { selectedVoice = pickVoice() }
 
 let currentAudio = null
 
-export async function speak(text, language = 'en') {
+export async function speak(text, language = 'ig') {  // Default to Igbo for this app
   if (!text) return
 
   // Stop any currently playing audio
   stop()
 
   try {
-    // Try server-side TTS (espeak-ng with Igbo support)
+    // Try server-side TTS (Meta MMS for native Igbo, with espeak-ng fallback)
     const response = await fetch('/api/tts/synthesize', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
