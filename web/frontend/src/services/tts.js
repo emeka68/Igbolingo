@@ -20,7 +20,7 @@ export async function speak(text, language = 'ig') {  // Default to Igbo for thi
   stop()
 
   try {
-    // Try server-side TTS (Meta MMS for native Igbo, with espeak-ng fallback)
+    // Server-side TTS: ElevenLabs multilingual (Ugochukwu Igbo voice), disk-cached
     const response = await fetch('/api/tts/synthesize', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

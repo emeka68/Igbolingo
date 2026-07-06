@@ -4,6 +4,7 @@ web/backend/venv/
 web/backend/__pycache__/
 web/backend/routes/__pycache__/
 web/backend/.env
+web/backend/tts_cache/
 **/__pycache__/
 *.pyc
 *.pyo
