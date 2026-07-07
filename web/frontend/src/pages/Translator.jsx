@@ -1,16 +1,17 @@
 import { useState, useRef } from 'react'
-import { api } from '../services/api'
+import { api, DIALECTS } from '../services/api'
 import { speak } from '../services/tts'
 
 const TABS = ['Text', 'Image', 'Voice']
 
 export default function Translator() {
   const [tab, setTab] = useState('Text')
+  const [dialect, setDialect] = useState('izugbe')
 
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-black mb-6">Translate</h1>
-      <div className="flex gap-2 mb-6 bg-white/5 p-1 rounded-xl">
+      <div className="flex gap-2 mb-4 bg-white/5 p-1 rounded-xl">
         {TABS.map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`flex-1 py-2 rounded-lg text-sm font-semibold transition
@@ -19,14 +20,39 @@ export default function Translator() {
           </button>
         ))}
       </div>
-      {tab === 'Text'  && <TextTranslator />}
+
+      {/* Dialect selector — applies to Text and Voice translation */}
+      {tab !== 'Image' && <DialectSelector dialect={dialect} setDialect={setDialect} />}
+
+      {tab === 'Text'  && <TextTranslator dialect={dialect} />}
       {tab === 'Image' && <ImageTranslator />}
-      {tab === 'Voice' && <VoiceTranslator />}
+      {tab === 'Voice' && <VoiceTranslator dialect={dialect} />}
     </div>
   )
 }
 
-function TextTranslator() {
+function DialectSelector({ dialect, setDialect }) {
+  const current = DIALECTS.find(d => d.id === dialect) || DIALECTS[0]
+  return (
+    <div className="mb-6">
+      <div className="flex gap-1.5 overflow-x-auto pb-1">
+        {DIALECTS.map(d => (
+          <button key={d.id} onClick={() => setDialect(d.id)}
+            className={`chip flex-shrink-0 text-xs ${dialect === d.id
+              ? 'bg-igbo-green border-igbo-green text-white'
+              : 'border-white/20 text-white/50 hover:border-igbo-green/50'}`}>
+            {d.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-white/30 text-xs mt-1.5">
+        {current.note}{dialect !== 'izugbe' && ' — dialect output is best-effort'}
+      </p>
+    </div>
+  )
+}
+
+function TextTranslator({ dialect }) {
   const [input, setInput] = useState('')
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -36,7 +62,7 @@ function TextTranslator() {
     if (!input.trim()) return
     setLoading(true); setError(''); setResult(null)
     try {
-      const data = await api.translateText(input.trim())
+      const data = await api.translateText(input.trim(), dialect)
       setResult(data)
       speak(data.igbo)
     } catch { setError('Translation failed. Check the backend is running.') }
@@ -143,7 +169,7 @@ function ImageTranslator() {
   )
 }
 
-function VoiceTranslator() {
+function VoiceTranslator({ dialect }) {
   const [listening, setListening] = useState(false)
   const [transcript, setTranscript] = useState('')
   const [result, setResult] = useState(null)
@@ -167,7 +193,7 @@ function VoiceTranslator() {
       const text = e.results[0][0].transcript
       setTranscript(text); setListening(false); setLoading(true)
       try {
-        const data = await api.translateSpeech(text)
+        const data = await api.translateSpeech(text, dialect)
         setResult(data); speak(data.igbo)
       } catch {}
       finally { setLoading(false) }
