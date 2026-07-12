@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useApp } from '../store/appStore'
 import { WORD_BANK, TOPICS } from '../data/wordBank'
 import { api } from '../services/api'
@@ -23,10 +23,16 @@ export default function Learn() {
     // Fetch cultural note in background
     setNoteLoading(true)
     api.culturalNote(topic.topic).then(d => setCulturalNote(d.note)).catch(() => {}).finally(() => setNoteLoading(false))
-    // Count words
-    const words = WORD_BANK[topic.key] || []
-    dispatch({ type: 'ADD_WORDS', count: words.length })
-    dispatch({ type: 'ADD_LESSON' })
+    // Count each topic once ever — otherwise repeatedly opening a topic
+    // inflates words/lessons stats and lets titles be farmed by tapping.
+    let counted = []
+    try { counted = JSON.parse(localStorage.getItem('ig_counted_topics')) || [] } catch {}
+    if (!counted.includes(topic.key)) {
+      const words = WORD_BANK[topic.key] || []
+      dispatch({ type: 'ADD_WORDS', count: words.length })
+      dispatch({ type: 'ADD_LESSON' })
+      localStorage.setItem('ig_counted_topics', JSON.stringify([...counted, topic.key]))
+    }
   }
 
   async function startQuiz() {
@@ -193,7 +199,12 @@ function Quiz({ questions, onBack }) {
   const [done, setDone] = useState(false)
 
   const q = questions[index]
-  const answers = q ? [...q.wrongAnswers, q.correctAnswer].sort(() => Math.random() - 0.5) : []
+  // Memoize per question — shuffling in the render body reshuffles the
+  // buttons every state change (e.g. while showing answer feedback).
+  const answers = useMemo(
+    () => q ? [...q.wrongAnswers, q.correctAnswer].sort(() => Math.random() - 0.5) : [],
+    [index, questions]
+  )
 
   function pick(answer) {
     if (selected) return

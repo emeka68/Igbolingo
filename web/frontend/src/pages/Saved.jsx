@@ -11,22 +11,26 @@ export default function Saved() {
   const [reviewDone, setReviewDone] = useState(false)
   const [easyCount, setEasyCount] = useState(0)
   const [hardCount, setHardCount] = useState(0)
+  const [sessionWords, setSessionWords] = useState([])
 
   const filtered = state.savedWords.filter(w =>
     !search || w.english.toLowerCase().includes(search.toLowerCase()) || w.igbo.toLowerCase().includes(search.toLowerCase())
   )
 
   function startReview() {
+    // Snapshot the due list: the live `dueWords` shrinks as words are rated
+    // (they stop being due), which would skip words / end the session early.
+    setSessionWords([...dueWords])
     setReviewIndex(0); setReviewFlipped(false); setReviewDone(false)
     setEasyCount(0); setHardCount(0); setView('review')
   }
 
   function rate(easy) {
-    const word = dueWords[reviewIndex]
+    const word = sessionWords[reviewIndex]
     dispatch({ type: easy ? 'SR_EASY' : 'SR_HARD', wordID: word.english })
     if (easy) setEasyCount(c => c + 1); else setHardCount(c => c + 1)
     setReviewFlipped(false)
-    if (reviewIndex + 1 >= dueWords.length) { setReviewDone(true); return }
+    if (reviewIndex + 1 >= sessionWords.length) { setReviewDone(true); return }
     setTimeout(() => setReviewIndex(i => i + 1), 100)
   }
 
@@ -44,16 +48,17 @@ export default function Saved() {
       </div>
     )
 
-    const word = dueWords[reviewIndex]
+    const word = sessionWords[reviewIndex]
+    if (!word) { setView('words'); return null }
     return (
       <div className="max-w-md mx-auto">
         <div className="flex items-center justify-between mb-4">
           <button onClick={() => setView('words')} className="btn-ghost pl-0">← Back</button>
-          <span className="text-white/40 text-sm">{reviewIndex + 1} / {dueWords.length}</span>
+          <span className="text-white/40 text-sm">{reviewIndex + 1} / {sessionWords.length}</span>
         </div>
         <div className="w-full h-1.5 bg-white/10 rounded-full mb-8">
           <div className="h-full bg-igbo-green rounded-full transition-all"
-            style={{ width: `${((reviewIndex + 1) / dueWords.length) * 100}%` }} />
+            style={{ width: `${((reviewIndex + 1) / sessionWords.length) * 100}%` }} />
         </div>
         <div onClick={() => { setReviewFlipped(f => !f); if (!reviewFlipped) speak(word.igbo) }}
           className="card min-h-[220px] flex flex-col items-center justify-center gap-4 text-center cursor-pointer hover:border-igbo-green/30 transition mb-6 select-none">

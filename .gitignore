@@ -9,3 +9,7 @@ web/backend/tts_cache/
 *.pyc
 *.pyo
 .DS_Store
+xcuserdata/
+IgboApp.xcodeproj/
+# Raw audio for the open dataset is hosted on Hugging Face, not in git
+voice-training/recordings/

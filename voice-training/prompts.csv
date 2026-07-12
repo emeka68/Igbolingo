@@ -1,0 +1,181 @@
+id,text,english,category
+tone_001,"ákwá","cry / weeping",tone_pair
+tone_002,"àkwà","bed / bridge",tone_pair
+tone_003,"ákwà","cloth",tone_pair
+tone_004,"àkwá","egg",tone_pair
+tone_005,"ísí","head",tone_pair
+tone_006,"ísì","smell",tone_pair
+tone_007,"ìsì","blindness",tone_pair
+tone_008,"ọ́kụ́","fire",tone_pair
+tone_009,"ànụ̀","bee",tone_pair
+tone_010,"ánụ́","meat",tone_pair
+tone_011,"égbé","kite (bird)",tone_pair
+tone_012,"égbè","gun",tone_pair
+tone_013,"óké","rat",tone_pair
+tone_014,"òkè","boundary / share",tone_pair
+vocab_greetings_001,"Ndewo","Hello",vocab_greetings
+vocab_greetings_002,"Ụtụtụ ọma","Good morning",vocab_greetings
+vocab_greetings_003,"Ehihie ọma","Good afternoon",vocab_greetings
+vocab_greetings_004,"Anyasị ọma","Good evening",vocab_greetings
+vocab_greetings_005,"Ka chi foo","Good night",vocab_greetings
+vocab_greetings_006,"Nnọọ","Welcome",vocab_greetings
+vocab_greetings_007,"Kedu?","How are you?",vocab_greetings
+vocab_greetings_008,"Adị m mma","I am fine",vocab_greetings
+vocab_greetings_009,"Daalụ","Thank you",vocab_greetings
+vocab_greetings_010,"Biko","Please",vocab_greetings
+vocab_greetings_011,"Ndo","Sorry",vocab_greetings
+vocab_greetings_012,"Ka ọ dị","Goodbye",vocab_greetings
+vocab_numbers_001,"Otu","One",vocab_numbers
+vocab_numbers_002,"Abụọ","Two",vocab_numbers
+vocab_numbers_003,"Atọ","Three",vocab_numbers
+vocab_numbers_004,"Anọ","Four",vocab_numbers
+vocab_numbers_005,"Ise","Five",vocab_numbers
+vocab_numbers_006,"Isii","Six",vocab_numbers
+vocab_numbers_007,"Asaa","Seven",vocab_numbers
+vocab_numbers_008,"Asatọ","Eight",vocab_numbers
+vocab_numbers_009,"Itoolu","Nine",vocab_numbers
+vocab_numbers_010,"Iri","Ten",vocab_numbers
+vocab_numbers_011,"Iri abụọ","Twenty",vocab_numbers
+vocab_numbers_012,"Otu narị","Hundred",vocab_numbers
+vocab_family_001,"Nne","Mother",vocab_family
+vocab_family_002,"Nna","Father",vocab_family
+vocab_family_003,"Nwa","Child",vocab_family
+vocab_family_004,"Nwa nwoke","Son",vocab_family
+vocab_family_005,"Nwa nwanyị","Daughter",vocab_family
+vocab_family_006,"Nwanne nwoke","Brother",vocab_family
+vocab_family_007,"Nwanne nwanyị","Sister",vocab_family
+vocab_family_008,"Nnenna","Grandmother",vocab_family
+vocab_family_009,"Nnenna nwoke","Grandfather",vocab_family
+vocab_family_010,"Nnanna","Uncle",vocab_family
+vocab_family_011,"Nne ochie","Aunt",vocab_family
+vocab_family_012,"Ezinụlọ","Family",vocab_family
+vocab_food_drink_001,"Nri","Food",vocab_food_drink
+vocab_food_drink_002,"Mmiri","Water",vocab_food_drink
+vocab_food_drink_003,"Ji","Yam",vocab_food_drink
+vocab_food_drink_004,"Osikapa","Rice",vocab_food_drink
+vocab_food_drink_005,"Mmanyị nri","Palm oil",vocab_food_drink
+vocab_food_drink_006,"Mmanya ngwo","Palm wine",vocab_food_drink
+vocab_food_drink_007,"Ofe ose","Pepper soup",vocab_food_drink
+vocab_food_drink_008,"Ofe egusi","Egusi soup",vocab_food_drink
+vocab_food_drink_009,"Onugbu","Bitter leaf",vocab_food_drink
+vocab_food_drink_010,"Oji","Kola nut",vocab_food_drink
+vocab_food_drink_011,"Anụ","Meat",vocab_food_drink
+vocab_food_drink_012,"Azụ","Fish",vocab_food_drink
+vocab_animals_001,"Nkịta","Dog",vocab_animals
+vocab_animals_002,"Nwamba","Cat",vocab_animals
+vocab_animals_003,"Ewu","Goat",vocab_animals
+vocab_animals_004,"Efi","Cow",vocab_animals
+vocab_animals_005,"Ọkụkọ","Chicken",vocab_animals
+vocab_animals_006,"Nnụnụ","Bird",vocab_animals
+vocab_animals_007,"Agwọ","Snake",vocab_animals
+vocab_animals_008,"Enyi","Elephant",vocab_animals
+vocab_animals_009,"Odum","Lion",vocab_animals
+vocab_animals_010,"Mbe","Tortoise",vocab_animals
+vocab_animals_011,"Enwe","Monkey",vocab_animals
+vocab_animals_012,"Azụ","Fish",vocab_animals
+vocab_colours_001,"Uhie","Red",vocab_colours
+vocab_colours_002,"Anụnụ","Blue",vocab_colours
+vocab_colours_003,"Ndụ ndụ","Green",vocab_colours
+vocab_colours_004,"Ọcha","White",vocab_colours
+vocab_colours_005,"Ojii","Black",vocab_colours
+vocab_colours_006,"Edo edo","Yellow",vocab_colours
+vocab_colours_007,"Oroma","Orange",vocab_colours
+vocab_body_parts_001,"Isi","Head",vocab_body_parts
+vocab_body_parts_002,"Anya","Eye",vocab_body_parts
+vocab_body_parts_003,"Ntị","Ear",vocab_body_parts
+vocab_body_parts_004,"Imi","Nose",vocab_body_parts
+vocab_body_parts_005,"Ọnụ","Mouth",vocab_body_parts
+vocab_body_parts_006,"Aka","Hand",vocab_body_parts
+vocab_body_parts_007,"Ụkwụ","Foot",vocab_body_parts
+vocab_body_parts_008,"Obi","Heart",vocab_body_parts
+vocab_days_time_001,"Taa","Today",vocab_days_time
+vocab_days_time_002,"Echi","Tomorrow",vocab_days_time
+vocab_days_time_003,"Ụnyaahụ","Yesterday",vocab_days_time
+vocab_days_time_004,"Ụtụtụ","Morning",vocab_days_time
+vocab_days_time_005,"Abalị","Night",vocab_days_time
+vocab_days_time_006,"Mọnde","Monday",vocab_days_time
+vocab_days_time_007,"Fraịde","Friday",vocab_days_time
+vocab_days_time_008,"Sọndee","Sunday",vocab_days_time
+vocab_common_phrases_001,"A hụrụ m gị n'anya","I love you",vocab_common_phrases
+vocab_common_phrases_002,"Kedụ aha gị?","What is your name?",vocab_common_phrases
+vocab_common_phrases_003,"Aha m bụ","My name is",vocab_common_phrases
+vocab_common_phrases_004,"Ebee ka i si?","Where are you from?",vocab_common_phrases
+vocab_common_phrases_005,"Anaghị m aghọta","I do not understand",vocab_common_phrases
+vocab_common_phrases_006,"Kwuo nwayọọ","Speak slowly",vocab_common_phrases
+vocab_common_phrases_007,"Ego ole?","How much?",vocab_common_phrases
+vocab_common_phrases_008,"Chukwu gozie gị","God bless you",vocab_common_phrases
+sentence_001,"Ụtụtụ ọma, nne m. Kedu ka ị boola?","Good morning, my mother. How did you wake?",sentence
+sentence_002,"Kedu ka ọ dị? Ọ dị mma, daalụ.","How is it? It is fine, thank you.",sentence
+sentence_003,"Aha m bụ Ugochukwu. Kedụ aha gị?","My name is Ugochukwu. What is your name?",sentence
+sentence_004,"Nwa m na-amụ asụsụ Igbo.","My child is learning the Igbo language.",sentence
+sentence_005,"Bịa ka anyị gaa ahịa.","Come, let us go to the market.",sentence
+sentence_006,"Anyị ga-eri nri n'oge ehihie.","We will eat in the afternoon.",sentence
+sentence_007,"Biko, kwuo ya ọzọ nwayọọ.","Please, say it again slowly.",sentence
+sentence_008,"A hụrụ m gị n'anya, nwa m.","I love you, my child.",sentence
+sentence_009,"Chukwu gozie gị na ezinụlọ gị.","God bless you and your family.",sentence
+sentence_010,"Ka chi foo. Ka anyị hụ echi.","Good night. See you tomorrow.",sentence
+sentence_011,"Mmiri na-ezo taa, kpachara anya.","It is raining today, be careful.",sentence
+sentence_012,"Ji na ofe onugbu dị ụtọ.","Yam and bitter-leaf soup are delicious.",sentence
+sentence_013,"Ndewo nu! Nnọọ n'ụlọ anyị.","Hello everyone! Welcome to our home.",sentence
+sentence_014,"Ege m ntị mgbe okenye na-ekwu okwu.","I listen when an elder is speaking.",sentence
+sentence_015,"Echi ka anyị ga-aga ahịa Eke.","Tomorrow we will go to Eke market.",sentence
+proverb_001,"Onye wetara oji wetara ndụ","He who brings kola nut brings life",proverb
+proverb_002,"Egbe bere, ugo bere; nke si ibe ya ebena nku kwaa ya","Let the kite perch, let the eagle perch; whichever says the other should not, let its wing break",proverb
+proverb_003,"Onye aghana nwanne ya","Do not abandon your sibling",proverb
+proverb_004,"Otu onye tuo izu, o gbue ochu","If one person plans alone, they fail",proverb
+proverb_005,"Onye kwe, chi ya ekwe","When a person agrees, their personal spirit agrees also",proverb
+proverb_006,"Aka nri kwọọ aka ekpe, aka ekpe kwọọ aka nri","The right hand washes the left, the left hand washes the right",proverb
+proverb_007,"Ọ bụ mfe ilu ogwe osisi, ma ọ dịghị mfe ilu ndụ","It is easy to cut a stick but not easy to live a life",proverb
+proverb_008,"Mmadụ bụ ihe kachasị mma n'uwa","A person is the most precious thing in the world",proverb
+proverb_009,"Eze dị n'ime ọnụ","The king is in the mouth",proverb
+proverb_010,"Ajụjụ adịghị eme mmadụ ihere","Asking questions does not embarrass a person",proverb
+proverb_011,"Ndụ bụ ụzọ, ọ bụghị ọnọdụ","Life is a journey, not a destination",proverb
+proverb_012,"Chukwu gozie aka ya n'olu","God blesses the hand in its labour",proverb
+proverb_013,"Osisi na-ada n'akụkụ ka ọ dara","A tree falls toward where it leans",proverb
+proverb_014,"Ụzọ bụ n'anya, ma ọ bụghị n'ụkwụ","The road is in the eye, not in the foot",proverb
+proverb_015,"Ụlọ dị mma mana o nweghị mmadụ","A house may be fine but without people it is nothing",proverb
+proverb_016,"Ihe di mma n'ọnụ adịghị mma n'afọ","What is sweet in the mouth may not be sweet in the stomach",proverb
+proverb_017,"Ihe mmadụ si n'obi ya pụta ka mma","What comes from the heart speaks better",proverb
+proverb_018,"Nke ọma abịa, nke ọjọọ gbaa ọsọ","Let good things come, let bad things run",proverb
+proverb_019,"Ihe mmadụ ji eme ihe bụ obi ya","What drives a person is their heart",proverb
+proverb_020,"Onye nwere obi ọma adịghị enyo obi ọjọọ","A person with a good heart does not wear a bad one",proverb
+proverb_021,"Ọ bụ ihe e ji n'aka nọrọ ya","What is in the hand stays in the hand",proverb
+proverb_022,"Chi onye adịghị ura n'oge ya na-aga ije","One's chi does not sleep while they are on a journey",proverb
+proverb_023,"Onye wetara mmanya wetara udo","He who brings wine brings peace",proverb
+proverb_024,"Nwata kọọ ihe okenye pụọ ọsọ, ọ dịghị mma","It is not good for a child to say what makes an elder flee",proverb
+proverb_025,"Aka nri kwọọ aka ekpe","The right hand washes the left",proverb
+proverb_026,"Onye nwere isi agwaghị ya ka ọ dee n'ala","A person with a head is never told to use it as a pillow",proverb
+proverb_027,"Ihe ọjị eme na-eme n'oge ya","What kola nut does, it does in its own time",proverb
+proverb_028,"Ọ bụ n'afọ ya ka ọ na-eji ọrụ ya","It is from the belly that one pushes their work",proverb
+proverb_029,"Nwa mgbeke na-agụ ife n'oge mmiri ozuzo","The lazy child reads when the rain comes",proverb
+proverb_030,"Ihe onye metara ya adịghị egbu ya","What one has done to another does not kill the doer immediately",proverb
+proverb_031,"Nwoke bụ agụ, nwanyị bụ mmiri","The man is a leopard, the woman is water",proverb
+proverb_032,"Ọ bụrụ na ị maghị ebe mmiri bidoro maba gị, ị gaghị ama ebe ọ kwụsịrị","If you do not know where the rain began to beat you, you cannot know where it stopped",proverb
+proverb_033," Egbe bere, ugo bere","May the kite perch and may the eagle perch",proverb
+proverb_034,"A na-eji nwayọ eri ihe dị ọkụ","It is with patience that one eats a hot meal",proverb
+proverb_035,"Otu mkpịsị aka rụta mmanụ, ọ zụọ ọ zụrụ ndị ọzọ","When one finger touches oil, it spreads to the others",proverb
+proverb_036,"Ọ bụ mgbe ọ kụ na-akụ ka a na-akụ ya","The iron is struck while it is hot",proverb
+proverb_037,"Nwata bunie nna ya elu, akpụkpọ ya ọ mịnye ya","If a child lifts his father up, his own clothing covers the father's nakedness",proverb
+proverb_038,"Onye ji onye n'ala ji onwe ya","He who holds another down holds himself down too",proverb
+proverb_039,"Agwọ emeghị nke o ji bụrụ agwọ, umuaka achacha ya","A snake that fails to show it is a snake will be tied up by children as firewood",proverb
+proverb_040,"Ọ bụghị ụbọchị niile ka eji eri anụ","It is not every day one eats meat",proverb
+proverb_041,"Ebe onye dara ka chi ya kwaturu ya","Where a person falls is where their chi pushed them down",proverb
+proverb_042,"Mmiri riri enyi, ọ dịghị agba mmiri","The water that swallowed the elephant does not overflow with pride",proverb
+proverb_043,"Onye maara ihe ọ na-eme, ọ na-eme ya nwayọ","One who knows what they are doing does it gently",proverb
+proverb_044,"Nkịta si na ihe ya ji achị ọsọ bụ nʼihi na ọ maghị ihe na-eso ya","The dog runs because it does not know what pursues it",proverb
+proverb_045,"Ọ bụ nwayọọ nwayọọ ka e ji aracha ọka dị ọkụ","It is gently, gently that one licks hot corn",proverb
+proverb_046,"Onye lụọ ọgụ nna ya, ọ na-elu ya na mgbagbu","Whoever inherits their father's quarrel inherits its wounds",proverb
+proverb_047," Maka na ọ dịghị mma, ka anyị jiri gaa nwayọ","Because the road is not good, let us go slowly",proverb
+proverb_048,"Ọ bụ ofu mkpụrụ ọka ka e ji mara ọka ọ chara acha","It is by a single grain that one tests whether the corn is ripe",proverb
+proverb_049,"Onye na-agba ọsọ na onye na-achụ ya nwere otu ebe ha na-eje","The one fleeing and the one pursuing are headed the same way",proverb
+proverb_050,"Ukwu na-eje ije na-ebute akụ","The feet that keep walking bring home wealth",proverb
+proverb_051,"Onye nwụrụ n'oge ọkọchị anaghị echefu ya n'udu mmiri","One who suffered in the dry season does not forget it in the rains",proverb
+proverb_052,"Nwaanyị mụta ọgụ mgba, ọ na-agba ya n'ụlọ di ya","When a woman learns to wrestle, she wrestles in her husband's house",proverb
+proverb_053,"Aka aja aja na-ebute ọnụ mmanụ mmanụ","Soil-covered hands bring an oil-filled mouth",proverb
+proverb_054,"Ọ bụ n'ọnụ ka mmadụ ji ama ezi okwu","It is by the mouth that one is known for truth",proverb
+proverb_055,"Onye buru ibu ọ ga-ata ahụhụ","He who carries a heavy load will feel its weight",proverb
+unscripted_001,"(transcribe after recording)","Tell the story of Mbe na Nnụnụ (Tortoise and the Birds) freely in Igbo, 2-3 minutes, animated storytelling voice.",unscripted
+unscripted_002,"(transcribe after recording)","Tell any folktale you heard growing up, 2-3 minutes, in your own words.",unscripted
+unscripted_003,"(transcribe after recording)","Introduce yourself and your family in Igbo, 1-2 minutes, natural conversational tone.",unscripted
+unscripted_004,"(transcribe after recording)","Describe how to cook a favourite Igbo dish, 1-2 minutes.",unscripted
+unscripted_005,"(transcribe after recording)","Explain why the Igbo language matters to you, 1-2 minutes.",unscripted
