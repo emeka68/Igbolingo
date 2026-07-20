@@ -36,8 +36,9 @@ export default function Nav() {
         ))}
       </nav>
 
-      {/* Mobile bottom bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-igbo-card border-t border-white/5 z-30 flex">
+      {/* Mobile bottom bar — pb-safe keeps it above the iOS home indicator */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-igbo-card border-t border-white/5 z-30 flex"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {links.map(({ to, label, icon }) => (
           <NavLink key={to} to={to} end={to === '/'}
             className={({ isActive }) =>

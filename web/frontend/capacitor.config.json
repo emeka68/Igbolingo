@@ -1,0 +1,12 @@
+{
+  "appId": "com.emmanuelduru.igbolingo",
+  "appName": "Igbolingo",
+  "webDir": "dist",
+  "backgroundColor": "#0f1f17",
+  "ios": {
+    "contentInset": "automatic"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

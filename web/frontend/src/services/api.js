@@ -1,4 +1,9 @@
-const BASE = '/api'
+// In the browser the Vite dev proxy (or same-origin deploy) handles '/api'.
+// In the Capacitor mobile shell there is no proxy — the app runs from
+// capacitor://localhost — so VITE_API_URL must point at the backend
+// (LAN IP during development, deployed URL in production).
+export const API_BASE = (import.meta.env.VITE_API_URL || '') + '/api'
+const BASE = API_BASE
 
 async function post(path, body) {
   const res = await fetch(`${BASE}${path}`, {

@@ -9,7 +9,14 @@ app = FastAPI(title="Igbolingo API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        # Capacitor mobile shells (iOS / Android webview origins)
+        "capacitor://localhost",
+        "http://localhost",
+        "https://localhost",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

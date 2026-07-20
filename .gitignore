@@ -11,5 +11,14 @@ web/backend/tts_cache/
 .DS_Store
 xcuserdata/
 IgboApp.xcodeproj/
+# Capacitor native build artifacts (platform folders themselves are committed)
+web/frontend/ios/App/Pods/
+web/frontend/ios/App/App/public/
+web/frontend/ios/DerivedData/
+web/frontend/android/.gradle/
+web/frontend/android/app/build/
+web/frontend/android/build/
+web/frontend/android/local.properties
+web/frontend/.env.local
 # Raw audio for the open dataset is hosted on Hugging Face, not in git
 voice-training/recordings/

@@ -1,4 +1,6 @@
-// TTS service: tries backend espeak-ng first (better Igbo), falls back to Web Speech API
+// TTS service: backend ElevenLabs first, falls back to Web Speech API
+import { API_BASE } from './api.js'
+
 let selectedVoice = null
 
 function pickVoice() {
@@ -21,7 +23,7 @@ export async function speak(text, language = 'ig') {  // Default to Igbo for thi
 
   try {
     // Server-side TTS: ElevenLabs multilingual (Ugochukwu Igbo voice), disk-cached
-    const response = await fetch('/api/tts/synthesize', {
+    const response = await fetch(`${API_BASE}/tts/synthesize`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, language })
