@@ -13,6 +13,7 @@ xcuserdata/
 IgboApp.xcodeproj/
 # Capacitor native build artifacts (platform folders themselves are committed)
 web/frontend/ios/App/Pods/
+web/frontend/ios/App/*.xcworkspace/xcuserdata/
 web/frontend/ios/App/App/public/
 web/frontend/ios/DerivedData/
 web/frontend/android/.gradle/

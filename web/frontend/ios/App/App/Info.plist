@@ -24,6 +24,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Igbolingo needs microphone access to translate your spoken English into Igbo.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Igbolingo uses speech recognition to understand what you say in the voice translator.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Igbolingo needs camera access so you can photograph objects and learn their Igbo names.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Igbolingo needs photo library access to translate objects in your pictures.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

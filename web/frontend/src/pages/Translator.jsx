@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { api, DIALECTS } from '../services/api'
 import { speak } from '../services/tts'
+import { listenOnce, isSpeechSupported } from '../services/speech'
 
 const TABS = ['Text', 'Image', 'Voice']
 
@@ -174,34 +175,38 @@ function VoiceTranslator({ dialect }) {
   const [transcript, setTranscript] = useState('')
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
-  const recognitionRef = useRef(null)
+  const [error, setError] = useState('')
+  const stopRef = useRef(null)
 
-  function toggleListen() {
-    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      alert('Speech recognition not supported in this browser. Try Chrome.')
-      return
-    }
+  async function toggleListen() {
     if (listening) {
-      recognitionRef.current?.stop()
+      stopRef.current?.()
       setListening(false)
       return
     }
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
-    const rec = new SR()
-    rec.lang = 'en-US'; rec.continuous = false; rec.interimResults = false
-    rec.onresult = async (e) => {
-      const text = e.results[0][0].transcript
-      setTranscript(text); setListening(false); setLoading(true)
-      try {
-        const data = await api.translateSpeech(text, dialect)
-        setResult(data); speak(data.igbo)
-      } catch {}
-      finally { setLoading(false) }
+    if (!isSpeechSupported()) {
+      setError('Speech recognition is not available on this device/browser.')
+      return
     }
-    rec.onerror = () => setListening(false)
-    rec.onend = () => setListening(false)
-    recognitionRef.current = rec
-    rec.start(); setListening(true)
+    setError(''); setTranscript(''); setResult(null)
+    setListening(true)
+    stopRef.current = await listenOnce(
+      async (text) => {
+        setTranscript(text); setListening(false); setLoading(true)
+        try {
+          const data = await api.translateSpeech(text, dialect)
+          setResult(data); speak(data.igbo)
+        } catch {
+          setError('Translation failed. Check the backend is running.')
+        } finally {
+          setLoading(false)
+        }
+      },
+      (err) => {
+        setListening(false)
+        if (err) setError(err.message || 'Speech recognition failed.')
+      }
+    )
   }
 
   return (
@@ -216,6 +221,7 @@ function VoiceTranslator({ dialect }) {
           {listening ? 'Listening… speak now' : 'Tap to speak English'}
         </p>
       </div>
+      {error && <p className="text-red-400 text-sm">{error}</p>}
       {transcript && (
         <div className="card text-left">
           <label className="text-xs text-white/40 uppercase font-semibold">You said</label>
