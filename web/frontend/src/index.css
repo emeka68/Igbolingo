@@ -3,15 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  body { @apply bg-igbo-dark text-white font-sans antialiased; }
+  body { @apply bg-igbo-dark text-white font-sans antialiased; background-image: radial-gradient(circle at 90% 0%, rgba(33,144,87,.16), transparent 35%); }
   * { @apply box-border; }
+  :focus-visible { outline: 3px solid #e5b84a; outline-offset: 3px; }
+  ::selection { background: #219057; color: white; }
 }
 
 @layer components {
-  .card { @apply bg-igbo-card rounded-2xl p-4 border border-white/5; }
-  .btn-primary { @apply bg-igbo-green text-white font-semibold px-4 py-2 rounded-xl hover:bg-igbo-green/90 transition disabled:opacity-40 disabled:cursor-not-allowed; }
+  .card { @apply bg-igbo-card rounded-2xl p-5 border border-white/10 shadow-lg shadow-black/10; }
+  .btn-primary { @apply bg-igbo-green text-white font-semibold px-4 py-3 rounded-xl hover:bg-igbo-green/90 transition disabled:opacity-40 disabled:cursor-not-allowed; }
   .btn-ghost { @apply text-igbo-green font-semibold px-4 py-2 rounded-xl hover:bg-igbo-green/10 transition; }
   .chip { @apply px-3 py-1 rounded-full text-sm font-semibold border transition; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }

@@ -2,7 +2,7 @@ import hashlib
 import os
 import requests
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 
@@ -30,7 +30,7 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 
 
 class TextToSpeechRequest(BaseModel):
-    text: str
+    text: str = Field(min_length=1, max_length=2500)
     language: str = "ig"
 
 
@@ -42,7 +42,7 @@ def _cache_path(text: str) -> str:
 
 
 @router.post("/synthesize")
-async def synthesize_speech(req: TextToSpeechRequest):
+def synthesize_speech(req: TextToSpeechRequest):
     """
     Generate speech audio using ElevenLabs multilingual TTS for Igbo.
     Cached to disk so identical phrases are only ever synthesized once.
@@ -82,11 +82,7 @@ async def synthesize_speech(req: TextToSpeechRequest):
         )
 
         if response.status_code != 200:
-            try:
-                error_msg = response.json().get("detail", {}).get("message", "Unknown error")
-            except Exception:
-                error_msg = response.text[:200]
-            raise HTTPException(response.status_code, f"ElevenLabs error: {error_msg}")
+            raise HTTPException(502, "Speech provider could not generate audio")
 
         # Write to cache atomically (temp then rename) so a failed/partial
         # write can never leave a corrupt file that we'd later serve.
@@ -103,9 +99,9 @@ async def synthesize_speech(req: TextToSpeechRequest):
 
     except requests.exceptions.Timeout:
         raise HTTPException(504, "TTS request timed out")
-    except requests.exceptions.RequestException as e:
-        raise HTTPException(500, f"TTS request failed: {str(e)}")
+    except requests.exceptions.RequestException:
+        raise HTTPException(502, "Speech provider unavailable")
     except HTTPException:
         raise
-    except Exception as e:
-        raise HTTPException(500, f"TTS error: {str(e)}")
+    except Exception:
+        raise HTTPException(500, "Speech generation failed")

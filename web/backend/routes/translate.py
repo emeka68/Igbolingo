@@ -1,6 +1,7 @@
 import base64, json, re
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from pydantic import BaseModel
+from starlette.concurrency import run_in_threadpool
+from pydantic import BaseModel, Field
 from anthropic import Anthropic
 
 router = APIRouter(prefix="/translate", tags=["translate"])
@@ -30,17 +31,17 @@ def dialect_clause(dialect: str) -> str:
 
 
 class TextRequest(BaseModel):
-    text: str
+    text: str = Field(min_length=1, max_length=2000)
     dialect: str = "izugbe"
 
 
 class SpeechRequest(BaseModel):
-    text: str
+    text: str = Field(min_length=1, max_length=2000)
     dialect: str = "izugbe"
 
 
 @router.post("/text")
-async def translate_text(req: TextRequest):
+def translate_text(req: TextRequest):
     prompt = f"""You are an expert Igbo linguist and translator. Translate the following English text into {dialect_clause(req.dialect)}.
 
 English: "{req.text}"
@@ -69,7 +70,13 @@ Respond ONLY with valid JSON (no markdown, no commentary):
 
 @router.post("/image")
 async def translate_image(file: UploadFile = File(...)):
-    data = await file.read()
+    if file.content_type not in {"image/jpeg", "image/png", "image/webp", "image/gif"}:
+        raise HTTPException(415, "Upload a JPEG, PNG, WebP, or GIF image")
+    data = await file.read(5 * 1024 * 1024 + 1)
+    if len(data) > 5 * 1024 * 1024:
+        raise HTTPException(413, "Image must be 5 MB or smaller")
+    if not data:
+        raise HTTPException(400, "Image is empty")
     b64 = base64.standard_b64encode(data).decode()
     media_type = file.content_type or "image/jpeg"
 
@@ -78,7 +85,8 @@ Use correct Igbo orthography with all diacritics and sub-dot marks.
 Return ONLY a JSON array (no markdown), max 8 items:
 [{"english":"...", "igbo":"...", "pronunciation":"...", "emoji":"..."}]"""
 
-    msg = client.messages.create(model=MODEL, max_tokens=1024,
+    msg = await run_in_threadpool(
+        client.messages.create, model=MODEL, max_tokens=1024,
         messages=[{"role": "user", "content": [
             {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": b64}},
             {"type": "text", "text": prompt}
@@ -90,7 +98,7 @@ Return ONLY a JSON array (no markdown), max 8 items:
 
 
 @router.post("/speech")
-async def translate_speech(req: SpeechRequest):
+def translate_speech(req: SpeechRequest):
     prompt = f"""Translate this spoken English into {dialect_clause(req.dialect)}.
 Use correct Igbo orthography with all diacritics.
 English: "{req.text}"

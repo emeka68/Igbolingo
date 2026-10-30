@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { api, DIALECTS } from '../services/api'
-import { speak } from '../services/tts'
+import { speak, stop } from '../services/tts'
 import { listenOnce, isSpeechSupported } from '../services/speech'
 
 const TABS = ['Text', 'Image', 'Voice']
@@ -11,10 +11,10 @@ export default function Translator() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-black mb-6">Translate</h1>
+      <div className="mb-6"><p className="text-igbo-green text-xs font-bold uppercase tracking-widest">Igbolingo · Asụsụ Igbo</p><h1 className="text-3xl font-black mt-1">Translate</h1><p className="text-white/60 text-sm mt-1">Find the words for everyday moments.</p></div>
       <div className="flex gap-2 mb-4 bg-white/5 p-1 rounded-xl">
         {TABS.map(t => (
-          <button key={t} onClick={() => setTab(t)}
+          <button key={t} onClick={() => setTab(t)} aria-pressed={tab === t}
             className={`flex-1 py-2 rounded-lg text-sm font-semibold transition
               ${tab === t ? 'bg-igbo-green text-white' : 'text-white/50 hover:text-white'}`}>
             {t === 'Text' ? '✍️' : t === 'Image' ? '📷' : '🎙️'} {t}
@@ -124,9 +124,12 @@ function ImageTranslator() {
   const [preview, setPreview] = useState(null)
   const [error, setError] = useState('')
   const fileRef = useRef()
+  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview) }, [preview])
 
   async function handleFile(file) {
     if (!file) return
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) { setError('Choose a JPEG, PNG, WebP, or GIF image.'); return }
+    if (file.size > 5 * 1024 * 1024) { setError('Choose an image under 5 MB.'); return }
     setPreview(URL.createObjectURL(file))
     setLoading(true); setError(''); setWords([])
     try {
@@ -138,8 +141,7 @@ function ImageTranslator() {
 
   return (
     <div className="space-y-4">
-      <div className="card border-2 border-dashed border-white/10 text-center cursor-pointer hover:border-igbo-green/50 transition"
-        onClick={() => fileRef.current?.click()}
+      <div className="card border-2 border-dashed border-white/10 text-center hover:border-igbo-green/50 transition"
         onDrop={e => { e.preventDefault(); handleFile(e.dataTransfer.files[0]) }}
         onDragOver={e => e.preventDefault()}>
         {preview ? (
@@ -147,11 +149,12 @@ function ImageTranslator() {
         ) : (
           <div className="py-12">
             <p className="text-4xl mb-3">📷</p>
-            <p className="text-white/50">Drop an image or tap to upload</p>
+            <p className="text-white/50">Drop an image or choose one below</p>
             <p className="text-white/30 text-sm mt-1">Point at objects to learn their Igbo names</p>
           </div>
         )}
-        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={e => handleFile(e.target.files[0])} />
+        <button type="button" onClick={() => fileRef.current?.click()} className="btn-primary mt-4">Choose image</button>
+        <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="sr-only" aria-label="Choose image to translate" onChange={e => { handleFile(e.target.files[0]); e.target.value = '' }} />
       </div>
       {loading && <p className="text-center text-igbo-green animate-pulse">Identifying objects…</p>}
       {error && <p className="text-red-400 text-sm text-center">{error}</p>}
@@ -177,6 +180,7 @@ function VoiceTranslator({ dialect }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const stopRef = useRef(null)
+  useEffect(() => () => { stopRef.current?.(); stop() }, [])
 
   async function toggleListen() {
     if (listening) {
@@ -190,7 +194,7 @@ function VoiceTranslator({ dialect }) {
     }
     setError(''); setTranscript(''); setResult(null)
     setListening(true)
-    stopRef.current = await listenOnce(
+    try { stopRef.current = await listenOnce(
       async (text) => {
         setTranscript(text); setListening(false); setLoading(true)
         try {
@@ -206,13 +210,16 @@ function VoiceTranslator({ dialect }) {
         setListening(false)
         if (err) setError(err.message || 'Speech recognition failed.')
       }
-    )
+    ) } catch (err) {
+      setListening(false)
+      setError(err.message || 'Could not start the microphone.')
+    }
   }
 
   return (
     <div className="space-y-6 text-center">
       <div className="py-8">
-        <button onClick={toggleListen}
+        <button onClick={toggleListen} aria-label={listening ? 'Stop listening' : 'Start speaking English'}
           className={`w-28 h-28 rounded-full text-4xl font-bold transition-all shadow-lg mx-auto flex items-center justify-center
             ${listening ? 'bg-red-500 animate-pulse scale-110' : 'bg-igbo-green hover:scale-105'}`}>
           {listening ? '⏹' : '🎙️'}

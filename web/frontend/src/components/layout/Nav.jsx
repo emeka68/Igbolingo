@@ -13,6 +13,7 @@ export default function Nav() {
 
   return (
     <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-igbo-green focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Skip to content</a>
       {/* Desktop sidebar */}
       <nav className="hidden md:flex flex-col w-56 min-h-screen bg-igbo-card border-r border-white/5 px-4 py-8 gap-1 fixed top-0 left-0 z-30">
         <div className="mb-8 px-2">
@@ -37,12 +38,12 @@ export default function Nav() {
       </nav>
 
       {/* Mobile bottom bar — pb-safe keeps it above the iOS home indicator */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-igbo-card border-t border-white/5 z-30 flex"
+      <nav aria-label="Main navigation" className="md:hidden fixed bottom-0 left-0 right-0 bg-igbo-card/95 backdrop-blur border-t border-white/10 z-30 flex"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         {links.map(({ to, label, icon }) => (
           <NavLink key={to} to={to} end={to === '/'}
             className={({ isActive }) =>
-              `flex-1 flex flex-col items-center gap-0.5 py-3 text-xs font-semibold transition
+              `flex-1 min-w-0 flex flex-col items-center gap-0.5 py-3 text-xs font-semibold transition
                ${isActive ? 'text-igbo-green' : 'text-white/40'}`
             }>
             <span className="text-xl relative">

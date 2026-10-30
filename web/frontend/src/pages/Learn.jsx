@@ -3,6 +3,7 @@ import { useApp } from '../store/appStore'
 import { WORD_BANK, TOPICS } from '../data/wordBank'
 import { api } from '../services/api'
 import { speak } from '../services/tts'
+import { Link } from 'react-router-dom'
 import TitleBadge from '../components/common/TitleBadge'
 import WordCard from '../components/common/WordCard'
 
@@ -23,15 +24,17 @@ export default function Learn() {
     // Fetch cultural note in background
     setNoteLoading(true)
     api.culturalNote(topic.topic).then(d => setCulturalNote(d.note)).catch(() => {}).finally(() => setNoteLoading(false))
-    // Count each topic once ever — otherwise repeatedly opening a topic
-    // inflates words/lessons stats and lets titles be farmed by tapping.
+  }
+
+  function completeTopic(topic) {
+    // Credit a lesson only after a completed practice session, once per topic.
     let counted = []
     try { counted = JSON.parse(localStorage.getItem('ig_counted_topics')) || [] } catch {}
     if (!counted.includes(topic.key)) {
       const words = WORD_BANK[topic.key] || []
+      localStorage.setItem('ig_counted_topics', JSON.stringify([...counted, topic.key]))
       dispatch({ type: 'ADD_WORDS', count: words.length })
       dispatch({ type: 'ADD_LESSON' })
-      localStorage.setItem('ig_counted_topics', JSON.stringify([...counted, topic.key]))
     }
   }
 
@@ -49,10 +52,10 @@ export default function Learn() {
   const words = selectedTopic ? (WORD_BANK[selectedTopic.key] || []) : []
 
   if (view === 'flashcards' && selectedTopic) {
-    return <Flashcards words={words} onBack={() => setView('lesson')} />
+    return <Flashcards words={words} onBack={() => setView('lesson')} onComplete={() => completeTopic(selectedTopic)} />
   }
   if (view === 'quiz' && quizQuestions.length) {
-    return <Quiz questions={quizQuestions} onBack={() => setView('lesson')} />
+    return <Quiz questions={quizQuestions} onBack={() => setView('lesson')} onComplete={() => completeTopic(selectedTopic)} />
   }
 
   if (view === 'lesson' && selectedTopic) {
@@ -92,6 +95,10 @@ export default function Learn() {
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-black mb-4">Learn Igbo</h1>
 
+      <Link to="/games" className="card flex items-center gap-3 mb-4 hover:border-igbo-green/40 transition">
+        <span className="text-3xl">🎮</span><span className="flex-1"><strong className="block">Mini games</strong><span className="text-white/60 text-sm">Practice with Word Match, Listen & Pick, Memory Flip, and Fill the Blank</span></span><span aria-hidden="true">›</span>
+      </Link>
+
       <TitleBadge />
 
       {/* Stats */}
@@ -125,7 +132,7 @@ export default function Learn() {
   )
 }
 
-function Flashcards({ words, onBack }) {
+function Flashcards({ words, onBack, onComplete }) {
   const [index, setIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [done, setDone] = useState(false)
@@ -133,7 +140,7 @@ function Flashcards({ words, onBack }) {
   const word = words[index]
 
   function next() {
-    if (index + 1 >= words.length) { setDone(true); return }
+    if (index + 1 >= words.length) { onComplete(); setDone(true); return }
     setFlipped(false)
     setTimeout(() => setIndex(i => i + 1), 150)
   }
@@ -166,7 +173,9 @@ function Flashcards({ words, onBack }) {
       </div>
 
       {/* Card */}
-      <div onClick={() => { setFlipped(f => !f); if (!flipped) speak(word.igbo) }}
+      <div role="button" tabIndex={0} aria-label={flipped ? `Show English for ${word.igbo}` : `Reveal Igbo for ${word.english}`}
+        onKeyDown={e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.currentTarget.click() } }}
+        onClick={() => { setFlipped(f => !f); if (!flipped) speak(word.igbo) }}
         className="card cursor-pointer min-h-[240px] flex flex-col items-center justify-center gap-4 text-center mb-6 hover:border-igbo-green/30 transition select-none">
         {word.emoji && <span className="text-5xl">{word.emoji}</span>}
         {flipped ? (
@@ -192,7 +201,7 @@ function Flashcards({ words, onBack }) {
   )
 }
 
-function Quiz({ questions, onBack }) {
+function Quiz({ questions, onBack, onComplete }) {
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState(null)
   const [score, setScore] = useState(0)
@@ -211,7 +220,7 @@ function Quiz({ questions, onBack }) {
     setSelected(answer)
     if (answer === q.correctAnswer) setScore(s => s + 1)
     setTimeout(() => {
-      if (index + 1 >= questions.length) { setDone(true); return }
+      if (index + 1 >= questions.length) { onComplete(); setDone(true); return }
       setSelected(null); setIndex(i => i + 1)
     }, 1200)
   }

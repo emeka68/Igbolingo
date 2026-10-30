@@ -60,7 +60,9 @@ export default function Saved() {
           <div className="h-full bg-igbo-green rounded-full transition-all"
             style={{ width: `${((reviewIndex + 1) / sessionWords.length) * 100}%` }} />
         </div>
-        <div onClick={() => { setReviewFlipped(f => !f); if (!reviewFlipped) speak(word.igbo) }}
+        <div role="button" tabIndex={0} aria-label={reviewFlipped ? `Show English for ${word.igbo}` : `Reveal Igbo for ${word.english}`}
+          onKeyDown={e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.currentTarget.click() } }}
+          onClick={() => { setReviewFlipped(f => !f); if (!reviewFlipped) speak(word.igbo) }}
           className="card min-h-[220px] flex flex-col items-center justify-center gap-4 text-center cursor-pointer hover:border-igbo-green/30 transition mb-6 select-none">
           {word.emoji && <span className="text-5xl">{word.emoji}</span>}
           {reviewFlipped ? (

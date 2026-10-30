@@ -4,6 +4,7 @@ import { API_BASE } from './api.js'
 let selectedVoice = null
 
 function pickVoice() {
+  if (!('speechSynthesis' in window)) return null
   const voices = speechSynthesis.getVoices()
   return voices.find(v => v.lang === 'en-NG')
     || voices.find(v => v.lang === 'en-GB')
@@ -11,31 +12,44 @@ function pickVoice() {
     || null
 }
 
-speechSynthesis.onvoiceschanged = () => { selectedVoice = pickVoice() }
+if ('speechSynthesis' in window) {
+  speechSynthesis.addEventListener('voiceschanged', () => { selectedVoice = pickVoice() })
+}
 
 let currentAudio = null
+let currentUrl = null
+let pendingRequest = null
+let playbackToken = 0
 
 export async function speak(text, language = 'ig') {  // Default to Igbo for this app
   if (!text) return
 
   // Stop any currently playing audio
   stop()
+  const token = playbackToken
+  const request = new AbortController()
+  pendingRequest = request
 
   try {
     // Server-side TTS: ElevenLabs multilingual (Ugochukwu Igbo voice), disk-cached
     const response = await fetch(`${API_BASE}/tts/synthesize`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, language })
+      body: JSON.stringify({ text, language }),
+      signal: request.signal
     })
 
     if (response.ok) {
       const blob = await response.blob()
+      if (request.signal.aborted || token !== playbackToken) return
+      pendingRequest = null
       const audioUrl = URL.createObjectURL(blob)
+      currentUrl = audioUrl
       currentAudio = new Audio(audioUrl)
+      currentAudio.onended = () => stop()
       currentAudio.play().catch(() => {
         // If audio play fails, fall back to Web Speech API
-        fallbackToWebSpeech(text)
+        if (!request.signal.aborted && token === playbackToken) fallbackToWebSpeech(text)
       })
       return
     }
@@ -43,6 +57,8 @@ export async function speak(text, language = 'ig') {  // Default to Igbo for thi
     // Network error or backend unavailable, use fallback
   }
 
+  if (request.signal.aborted || token !== playbackToken) return
+  pendingRequest = null
   // Fallback to Web Speech API if backend fails
   fallbackToWebSpeech(text)
 }
@@ -59,10 +75,19 @@ function fallbackToWebSpeech(text) {
 }
 
 export function stop() {
+  playbackToken += 1
+  if (pendingRequest) {
+    pendingRequest.abort()
+    pendingRequest = null
+  }
   if (currentAudio) {
     currentAudio.pause()
     currentAudio.currentTime = 0
     currentAudio = null
   }
-  speechSynthesis.cancel()
+  if (currentUrl) {
+    URL.revokeObjectURL(currentUrl)
+    currentUrl = null
+  }
+  if ('speechSynthesis' in window) speechSynthesis.cancel()
 }

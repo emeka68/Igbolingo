@@ -39,27 +39,31 @@ export async function listenOnce(onResult, onEnd) {
       }
     }
 
-    const listener = await SpeechRecognition.addListener('partialResults', (data) => {
+    let completed = false
+    let listener
+    const finish = (err) => {
+      if (completed) return
+      completed = true
+      listener?.remove()
+      SpeechRecognition.stop().catch(() => {})
+      onEnd(err)
+    }
+    listener = await SpeechRecognition.addListener('partialResults', (data) => {
       const text = data?.matches?.[0]
-      if (text) {
+      if (text && !completed) {
         onResult(text)
-        SpeechRecognition.stop().catch(() => {})
+        finish()
       }
     })
 
     try {
       await SpeechRecognition.start({ language: 'en-US', partialResults: true, popup: false })
     } catch (e) {
-      listener.remove()
-      onEnd(e)
+      finish(e)
       return () => {}
     }
 
-    const stop = () => {
-      listener.remove()
-      SpeechRecognition.stop().catch(() => {})
-      onEnd()
-    }
+    const stop = () => finish()
     // The plugin doesn't reliably fire a distinct "end" event across
     // platforms, so the caller (UI) drives onEnd via stop()/timeout.
     return stop

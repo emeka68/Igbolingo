@@ -11,7 +11,8 @@ export default function Culture() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-black mb-4">Omenala — Culture</h1>
+      <h1 className="text-3xl font-black mb-1">Omenala — Culture</h1>
+      <p className="text-white/60 text-sm mb-5">Stories, words, and wisdom from Igbo culture.</p>
 
       <ProverbCard />
 
@@ -39,7 +40,7 @@ function ProverbCard() {
     <div className="card border border-igbo-gold/30 bg-igbo-gold/5">
       <div className="flex justify-between items-center mb-3">
         <span className="text-xs font-bold text-igbo-gold uppercase tracking-wide">💛 Ilu Ụbọchị — Proverb of the Day</span>
-        <button onClick={() => speak(proverb.igbo)} className="text-igbo-gold text-sm hover:opacity-70">🔊</button>
+        <button onClick={() => speak(proverb.igbo)} aria-label="Listen to today's proverb" className="text-igbo-gold text-sm hover:opacity-70">🔊</button>
       </div>
       <p className="text-igbo-green font-bold italic mb-1">"{proverb.igbo}"</p>
       <p className="text-white/60 text-sm">"{proverb.english}"</p>
@@ -114,6 +115,7 @@ function StoryReader({ story, onBack }) {
           <p className="text-white/60 text-sm">{story.subtitle}</p>
         </div>
       </div>
+      <p className="text-xs text-white/60 mb-4">Story text in English · Igbo vocabulary below</p>
 
       <div className="flex gap-2 mb-6 bg-white/5 p-1 rounded-xl">
         {['paginated', 'scroll'].map(m => (
@@ -161,7 +163,7 @@ function StoryReader({ story, onBack }) {
           <div className="flex gap-3 mt-4">
             <button onClick={() => setPageIndex(i => Math.max(0, i - 1))} disabled={pageIndex === 0}
               className="btn-ghost flex-1 disabled:opacity-30">← Prev</button>
-            <button onClick={() => readAloud(story.paragraphs[pageIndex])}
+            <button onClick={() => readAloud(story.paragraphs[pageIndex])} aria-label="Read this story page aloud"
               className={`p-3 rounded-xl transition ${speaking ? 'bg-igbo-green text-white' : 'bg-white/10 text-igbo-green hover:bg-white/20'}`}>
               🔊
             </button>
